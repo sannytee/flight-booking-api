@@ -20,12 +20,12 @@ $ cd flight-booking-api
 Create a virtual environment by running
 
 ```bash
-$ make venv
+$ python venv {name of virtual folder}
 ```
 
 The above command will create a virtual environment but it needs to be activated. To activate the virtual environment, run the command
 ```bash
-source src/env/bin/activate
+source {name of virtual folder}/bin/activate
 ```
 
 Install the required dependencies
@@ -35,5 +35,5 @@ $ pip install -r requirements.txt
 
 run the application
 ```bash
-$ make start
+$ python manage.py runserver
 ```
