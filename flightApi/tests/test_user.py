@@ -4,6 +4,7 @@ import mock
 from flightApi.tests.base import BaseTestCase
 
 
+# pylint: disable=unused-argument
 class TestUser(BaseTestCase):
     """ Test for user view function"""
     @mock.patch('flightApi.views.user_auth.upload_image', return_value='a url')
@@ -122,3 +123,53 @@ class TestUser(BaseTestCase):
         response = self.test_client().post('/api/v1/auth/signup/', body)
         self.assertEqual(response.status_code, 400)
         self.assertIn('Enter a valid email address', str(response.data['error']['email']))
+
+    def test_view_user_auth_login_successful_with_valid_credentials(self):
+        """
+        Test the api for login user with valid credentials
+        """
+        body = {
+            "email": self.test_user.email,
+            "password": "password",
+        }
+        response = self.test_client().post('/api/v1/auth/login/', body)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['message'], 'login successful')
+
+    def test_view_user_auth_login_fail_with_invalid_body(self):
+        """
+        Test the api for login user with incomplete data from body
+        """
+        body = {
+            "email": self.test_user.email,
+        }
+        response = self.test_client().post('/api/v1/auth/login/', body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['message'], 'check if the password field exist')
+        self.assertEqual(response.data['error'], "missing field(s)")
+
+    def test_view_user_auth_login_fail_invalid_credential(self):
+        """
+        Test the api for login user with wrong password
+        """
+        body = {
+            "email": self.test_user.email,
+            "password": 'wrongpassword'
+        }
+        response = self.test_client().post('/api/v1/auth/login/', body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['status'], 'error')
+        self.assertEqual(response.data['error'], "Invalid login credentials")
+
+    def test_view_user_auth_login_fail_with_invalid_user(self):
+        """
+        Test the api for creating user with password and confirm_password not matching
+        """
+        body = {
+            "email": "randomuser@mail.com",
+            "password": 'wrongpassword'
+        }
+        response = self.test_client().post('/api/v1/auth/login/', body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['status'], 'error')
+        self.assertEqual(response.data['error'], "User not found")

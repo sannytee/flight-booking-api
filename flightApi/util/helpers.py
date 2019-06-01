@@ -17,3 +17,14 @@ def upload_image(image):
     """ Helper function to upload an image to cloudinary"""
     response = cloudinary.uploader.upload(image)
     return response['url']
+
+
+def check_user_input(required_field, user_input):
+    """ Helper function to check for required field in user input"""
+    message = ''
+    for field in required_field:
+        if field not in user_input.keys():
+            message += field + ', '
+    if message:
+        return 'check if the {} field exist'.format(message[:-2])
+    return None

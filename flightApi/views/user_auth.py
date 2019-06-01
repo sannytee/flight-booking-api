@@ -1,5 +1,5 @@
 """UserAuthViewSet to create an account and login """
-from django.contrib.auth.base_user import make_password
+from django.contrib.auth.base_user import make_password, check_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from rest_framework import status
@@ -11,10 +11,10 @@ from rest_framework.viewsets import ViewSet
 
 from flightApi.models import User
 from flightApi.serializers import UserSerializer
-from flightApi.util.helpers import upload_image, generate_token
+from flightApi.util.helpers import upload_image, generate_token, check_user_input
 
 
-# pylint: disable=no-self-use
+# pylint: disable=no-self-use,no-member
 class UserAuthViewSet(ViewSet):
     """ Users viewset."""
     serializer_class = UserSerializer
@@ -59,5 +59,39 @@ class UserAuthViewSet(ViewSet):
             data = {
                 'status': 'error',
                 'error': err
+            }
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+    def login(self, request):
+        """enables a user to login"""
+        user_info = request.data
+        try:
+            required_field = ['email', 'password']
+            validate_user_input = check_user_input(required_field, user_info)
+            if validate_user_input:
+                data = {
+                    'status': 'error',
+                    'error': 'missing field(s)',
+                    'message': validate_user_input
+                }
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            user = User.objects.get(email=user_info['email'])
+            if check_password(user_info['password'], user.password):
+                token = generate_token(user)
+                data = {
+                    'status': 'success',
+                    'token': token,
+                    'message': 'login successful'
+                }
+                return Response(data, status=status.HTTP_200_OK)
+            data = {
+                'status': 'error',
+                'error': 'Invalid login credentials'
+            }
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            data = {
+                'status': 'error',
+                'error': 'User not found'
             }
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
