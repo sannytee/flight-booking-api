@@ -13,8 +13,12 @@ user_signup = user_auth.UserAuthViewSet.as_view({
     'post': 'create',
 })
 
+user_login = user_auth.UserAuthViewSet.as_view({
+    'post': 'login'
+})
 
 urlpatterns = format_suffix_patterns([
     url(r'^$', welcome_message, name='welcome_message'),
     url(r'^api/v1/auth/signup/$', user_signup, name='user_signup'),
+    url(r'^api/v1/auth/login/$', user_login, name='user_login'),
 ])
