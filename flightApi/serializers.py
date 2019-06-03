@@ -12,8 +12,8 @@ class FlightSerializer(serializers.ModelSerializer):
     class Meta:
         """Access fields and create returned object"""
         model = Flight
-        fields = ('name', 'flight_class', 'departure_date', 'return_date',
-                  'departure_airport', 'arriving_airport', 'no_of_passenger')
+        fields = ('flight_name', 'flight_class', 'departure_date', 'return_date',
+                  'departure_airport', 'arriving_airport', 'no_of_passenger', 'passenger')
 
 
 class UserSerializer(serializers.ModelSerializer):
