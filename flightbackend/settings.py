@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import datetime
 import os
 
 import cloudinary
@@ -107,8 +106,7 @@ REST_FRAMEWORK = {
 }
 # JWT configuration
 JWT_AUTH = {
-    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1)
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
 }
 
 # Clodinary
