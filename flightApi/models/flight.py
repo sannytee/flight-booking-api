@@ -21,9 +21,8 @@ class Flight(models.Model):
     return_date = models.DateTimeField(null=True)
     departure_airport = models.CharField(max_length=100)
     arriving_airport = models.CharField(max_length=100)
-    no_of_passenger = models.PositiveSmallIntegerField()
-    passenger = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='flights')
+    passenger = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                  on_delete=models.CASCADE, related_name='passenger')
 
     class Meta:
         """Define metadata options."""

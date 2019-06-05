@@ -9,11 +9,13 @@ class FlightSerializer(serializers.ModelSerializer):
     """
         Flight Model serializer
     """
+    # passenger = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         """Access fields and create returned object"""
         model = Flight
         fields = ('flight_name', 'flight_class', 'departure_date', 'return_date',
-                  'departure_airport', 'arriving_airport', 'no_of_passenger', 'passenger')
+                  'departure_airport', 'arriving_airport', 'passenger')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -29,3 +31,16 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'email', 'profile_picture', 'flights'
                   )
         read_only_field = ('first_name', 'last_name', 'email')
+
+
+class FlightUserSerializer(serializers.ModelSerializer):
+    """
+        Flight-User serializer
+    """
+    passenger = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        """Access fields and create returned object"""
+        model = Flight
+        fields = ('flight_name', 'flight_class', 'departure_date', 'return_date',
+                  'departure_airport', 'arriving_airport', 'passenger')

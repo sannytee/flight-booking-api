@@ -24,7 +24,7 @@ class FlightViewset(ViewSet):
         flight_info = request.data.copy()
         query = request.query_params.get('type')
         required_fields = ['departure_date', 'departure_airport',
-                           'no_of_passenger', 'flight_class', 'arriving_airport']
+                           'flight_class', 'arriving_airport']
         if query == 'round':
             required_fields.append('return_date')
         validate_input = check_user_input(required_fields, flight_info)
