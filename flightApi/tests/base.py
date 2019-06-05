@@ -3,7 +3,7 @@
 from django.contrib.auth.base_user import make_password
 from rest_framework.test import APITestCase
 
-from flightApi.models import User
+from flightApi.models import User, Flight
 from flightApi.util.helpers import generate_token
 
 
@@ -24,6 +24,19 @@ class BaseTestCase(APITestCase):
         cls.test_user.save()
 
         cls.token = generate_token(cls.test_user)
+
+        cls.test_admin_user = User.objects.create_superuser("adminuser@mail.com", 'password')
+        cls.admin_token = generate_token(cls.test_admin_user)
+
+        cls.test_flight = Flight.objects.create(
+            flight_name="FT 807",
+            flight_class='economy',
+            departure_date='2019-05-28 14:45:00',
+            departure_airport='LOS',
+            arriving_airport='KGL',
+            passenger_id=cls.test_user.pk
+        )
+        cls.test_flight.save()
 
     def test_client(self, token=None):
         """Create a test client with an optional token"""

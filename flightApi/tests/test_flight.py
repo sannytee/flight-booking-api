@@ -54,3 +54,24 @@ class TestFlight(BaseTestCase):
         response = self.test_client(token=self.token).post("/api/v1/flights/?type=round", body)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data['error'], 'missing field(s)')
+
+    def test_view_admin_retrieve_passengers_for_a_specific_flight(self):
+        """
+        Test the api for admin to get passengers for a specific flight
+        """
+        self.test_client().login(username='adminuser@mail.com', password='password')
+        response = self.test_client().get(
+            "/api/v1/admin/flights/?name=FT 807&date=2019-05-28 14:45:00")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['status'], 'success')
+        self.assertEqual(len(response.data['passengers']), 1)
+
+    def test_user_cannot_retrieve_passengers_for_a_specific_flight(self):
+        """
+         Test that an ordinary user can't query this admin api
+        """
+        response = self.test_client(token=self.token).get(
+            "/api/v1/admin/flights/?name=FT 807&date=2019-05-28 14:45:00")
+        self.assertEqual(response.status_code, 403)
+        expected_message = 'You do not have permission to perform this action.'
+        self.assertEqual(response.data['detail'], expected_message)
