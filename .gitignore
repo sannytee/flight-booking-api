@@ -4,3 +4,5 @@ venv/
 .env
 .coverage
 cover/
+celerybeat-schedule.db
+celerybeat.pid

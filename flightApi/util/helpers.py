@@ -3,6 +3,8 @@ import datetime
 import random
 
 import cloudinary.uploader
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework_jwt.settings import api_settings
 
 
@@ -47,3 +49,13 @@ def filter_flight_field(flight_response, field):
         x:  flight_response.get(x) for x in field if x in flight_response
     }
     return filtered_response
+
+
+def send_booking_ticket_mail(email, msg):
+    """send ticket to user mail"""
+    subject = "Flight booking ticket"
+    from_email = settings.EMAIL_HOST_USER
+    to_email = [email]
+    message = msg
+    send_mail(subject=subject, from_email=from_email,
+              recipient_list=to_email, message=message, fail_silently=True)

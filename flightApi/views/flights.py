@@ -8,6 +8,7 @@ from rest_framework.viewsets import ViewSet
 
 from flightApi.models import Flight
 from flightApi.serializers import FlightSerializer
+from flightApi.tasks import send_booking_email_task
 from flightApi.util.helpers import check_user_input, get_flight_and_time, filter_flight_field
 
 
@@ -53,6 +54,14 @@ class FlightViewset(ViewSet):
                 'flightDetails': filter_flight_field(serializers.data, required_fields[:-1]),
                 'booked by': '{} {}'.format(user.first_name, user.last_name)
             }
+            email = user.email
+            flight_details = data['flightDetails']
+            message = f'Flight Booking Confirmed, below is your departure information \n\t' \
+                f'flight name: {flight_details["flight_name"]} \n' \
+                f'\tdeparture_date: {flight_details["departure_date"]} \n' \
+                f'\tdeparting_airport: {flight_details["departure_airport"]} \n' \
+                f'\tdeparture_date: {flight_details["departure_date"]}'
+            send_booking_email_task.delay(email, message)
             return Response(data, status=status.HTTP_201_CREATED)
         data = {
             'status': 'error',
