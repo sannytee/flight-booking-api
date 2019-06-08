@@ -1,10 +1,14 @@
 """ Test for flight """
+import mock
+
 from flightApi.tests.base import BaseTestCase
 
 
+# pylint: disable=unused-argument
 class TestFlight(BaseTestCase):
     """ Test for flight view function """
-    def test_view_flight_book_single_ticket_successfully_valid_cred(self):
+    @mock.patch('flightApi.views.flights.send_booking_email_task')
+    def test_view_flight_book_single_ticket_successfully_valid_cred(self, mail_patched_func):
         """
         Test the api for booking single flight with valid credentials
         """
@@ -22,7 +26,8 @@ class TestFlight(BaseTestCase):
         self.assertEqual(response.data['message'], "flight successfully booked")
         self.assertEqual(response.data['booked by'], user)
 
-    def test_view_flight_book_round_ticket_successfully_valid_cred(self):
+    @mock.patch('flightApi.views.flights.send_booking_email_task')
+    def test_view_flight_book_round_ticket_successfully_valid_cred(self, mail_patched_func):
         """
         Test the api for booking round flight with valid credentials
         """
