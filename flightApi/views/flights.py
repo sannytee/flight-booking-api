@@ -56,12 +56,13 @@ class FlightViewset(ViewSet):
             }
             email = user.email
             flight_details = data['flightDetails']
+            subject = "Flight booking ticket"
             message = f'Flight Booking Confirmed, below is your departure information \n\t' \
                 f'flight name: {flight_details["flight_name"]} \n' \
                 f'\tdeparture_date: {flight_details["departure_date"]} \n' \
                 f'\tdeparting_airport: {flight_details["departure_airport"]} \n' \
                 f'\tdeparture_date: {flight_details["departure_date"]}'
-            send_booking_email_task.delay(email, message)
+            send_booking_email_task.delay(subject, email, message)
             return Response(data, status=status.HTTP_201_CREATED)
         data = {
             'status': 'error',
