@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'django_nose',
+    'datetimeutc',
 
     'flightApi.apps.FlightapiConfig'
 ]
@@ -163,7 +164,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
@@ -187,7 +188,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Africa/Lagos'
 
 
 # Static files (CSS, JavaScript, Images)

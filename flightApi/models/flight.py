@@ -2,6 +2,7 @@
 
 # pylint: disable=too-few-public-methods
 
+from datetimeutc.fields import DateTimeUTCField
 from django.conf import settings
 from django.db import models
 
@@ -17,8 +18,8 @@ class Flight(models.Model):
 
     flight_name = models.CharField(max_length=30)
     flight_class = models.CharField(max_length=20, choices=FLIGHT_CLASS)
-    departure_date = models.DateTimeField()
-    return_date = models.DateTimeField(null=True)
+    departure_date = DateTimeUTCField(null=False)
+    return_date = DateTimeUTCField(null=True)
     departure_airport = models.CharField(max_length=100)
     arriving_airport = models.CharField(max_length=100)
     passenger = models.ForeignKey(settings.AUTH_USER_MODEL,
