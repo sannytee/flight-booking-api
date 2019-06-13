@@ -6,6 +6,14 @@ The flight-booking API allows user to basic flight booking operations.
 * Django
 * Django Rest Framework
 
+
+## API Endpoints
+The following are the endpoints currently available on the application
+* Sign up: POST /api/v1/auth/signup/
+* Log in: POST /api/v1/auth/login/
+* Book Flight: POST /api/v1/flights/
+* Get Passengers for a particular flight and date: GET /api/v1/flights?name={flight_name}&date={flight_datetime}
+
 ## Installation
 Clone the repo
 ```bash
@@ -33,7 +41,32 @@ Install the required dependencies
 $ pip install -r requirements.txt
 ```
 
+create an env file that matches the content of the env.sample file
+
+Run the Migration
+```bash
+$ python manage.py migrate
+```
+
+Install Redis and run the redis server
+
 run the application
 ```bash
 $ python manage.py runserver
+```
+
+with Django App nad Redis running, run the following command in the project directory for asynchronous job with celery
+```bash
+$ celery -A flightbackend worker -l info
+$ celery -A flightbackend beat -l info
+```
+
+
+## Testing
+```bash
+$ python manage.py test
+```
+To run the test with an html report, run this command
+```bash
+$ python manage.py test --cover-html
 ```
