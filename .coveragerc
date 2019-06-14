@@ -1,0 +1,18 @@
+# .coveragerc to control coverage.py
+[run]
+branch = False
+omit =
+    # omit anything in a .local directory anywhere
+    */.local/*
+    # omit everything in /usr
+    /usr/*
+	tests/*
+	venv/*
+    # omit this single file
+    flightApi/migrations/*
+	flightApi/admin.py
+	flightApi/apps.py
+	flightApi/tasks.py
+	flightbackend/settings.py
+	flightbackend/wsgi.py
+	manage.py

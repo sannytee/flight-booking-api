@@ -14,6 +14,7 @@ import os
 
 import cloudinary
 import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'cloudinary',
-    'django_nose',
     'datetimeutc',
 
     'flightApi.apps.FlightapiConfig'
@@ -78,13 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'flightbackend.wsgi.application'
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=flightApi',
-]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -195,3 +188,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'flightApi.User'
+
+
+django_heroku.settings(locals())

@@ -1,5 +1,7 @@
+![Build Status](https://travis-ci.com/SannyTee/flight-booking-api.svg?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/SannyTee/flight-booking-api/badge.svg)](https://coveralls.io/github/SannyTee/flight-booking-api)
 # Flight-Booking API
-The flight-booking API allows user to basic flight booking operations.
+The flight-booking API allows user to perform basic flight booking operations.
 
 ## Technologies
 
@@ -55,7 +57,7 @@ run the application
 $ python manage.py runserver
 ```
 
-with Django App nad Redis running, run the following command in the project directory for asynchronous job with celery
+with Django App and Redis running, run the following command in the project directory for asynchronous job with celery
 ```bash
 $ celery -A flightbackend worker -l info
 $ celery -A flightbackend beat -l info
