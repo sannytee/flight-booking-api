@@ -1,6 +1,6 @@
 ![Build Status](https://travis-ci.com/SannyTee/flight-booking-api.svg?branch=develop)
 [![Coverage Status](https://coveralls.io/repos/github/SannyTee/flight-booking-api/badge.svg)](https://coveralls.io/github/SannyTee/flight-booking-api)
-# Flight-Booking API
+# Flight-Booking API - An amazing project
 The flight-booking API allows user to perform basic flight booking operations.
 
 ## Technologies
