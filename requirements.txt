@@ -1,7 +1,7 @@
 APScheduler==3.6.0
 astroid==2.2.5
 bcrypt==3.1.6
-celery==4.3.0
+celery==5.2.2
 certifi==2019.3.9
 cffi==1.12.3
 cloudinary==1.16.0
